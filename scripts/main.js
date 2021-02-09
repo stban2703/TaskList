@@ -8,18 +8,24 @@ const clearCompletedBtn = document.querySelector(".taskList__clearCompleted");
 let currentTaskList = [];
 let itemCounter = 0;
 let currentFilter = "all";
+let generatedId = 0;
 
 // Agregar tarea a lista
 newTaskForm.addEventListener("submit", function (event) {
     event.preventDefault();
     let newTask = {
+        id: generatedId,
         name: newTaskForm.taskName.value,
         status: "active"
     }
     currentTaskList.push(newTask);
+    newTaskForm.taskName.value = "";
+    generatedId++;
     renderTaskList(currentTaskList, currentFilter);
     countTasks();
-    //console.log(itemCounter)
+    //console.log(currentTaskList);
+
+    //console.log(currentTaskList.indexOf(newTask));
 })
 
 // Limpiar todas las tareas completadas
@@ -61,7 +67,7 @@ function renderTaskList(list, filter) {
         `
 
         // Verificar el estado de la tarea
-        if (list[i].status == "completed") {
+        if (listCopy[i].status == "completed") {
             newTask.classList.add("task--completed")
         } else {
             newTask.classList.remove("task--completed")
@@ -73,7 +79,7 @@ function renderTaskList(list, filter) {
         // Boton para finalizar tarea
         const checkBtn = newTask.querySelector(".task__status");
         checkBtn.addEventListener("click", function () {
-            completeTask(newTask, i);
+            completeTask(i);
         })
 
         // Boton para borrar tarea
@@ -98,19 +104,15 @@ function countTasks() {
 }
 
 // Completar tarea
-function completeTask(task, i) {
+function completeTask(i) {
     if (currentTaskList[i].status != "completed") {
         currentTaskList[i].status = "completed";
         renderTaskList(currentTaskList, currentFilter);
-        //task.classList.add("task--completed")
     } else {
         currentTaskList[i].status = "active";
         renderTaskList(currentTaskList, currentFilter);
-        //task.classList.remove("task--completed")
     }
-
     countTasks();
-    //console.log(itemCounter);
 }
 
 // Borrar tarea
