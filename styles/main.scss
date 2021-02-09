@@ -1,0 +1,20 @@
+@import "reset";
+@import "taskList";
+@import "task";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: rgb(235, 235, 235);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+input[type="radio"] {
+    appearance: none;
+}

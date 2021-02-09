@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola mundo</title>
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+
+<body>
+    <article class="taskList">
+        <form class="taskList__newTask">
+            <img class="taskList__checkAll" src="./img/desplegable.svg" alt="">
+            <input class="taskList__input" type="text" name="taskName" placeholder="What needs to be done?">
+        </form>
+
+        <section class="taskList__container">
+
+            <!--<div class="task">
+                <div class="task__status">
+                    <img src="./img/verified.svg" alt="">
+                </div>
+
+                <p class="task__description">Ir a clase</p>
+
+                <div class="task__delete">
+                    <img src="./img/borrar.svg" alt="">
+                </div>
+            </div>-->
+
+        </section>
+
+        <section class="taskList__footer">
+            <p class="taskList__remainingTasks">
+                <span class="taskList__count"></span> items left
+            </p>
+            <form class="taskList__filter">
+                <label>
+                    <input type="radio" name="filter" value="all">
+                    All
+                </label>
+
+                <label>
+                    <input type="radio" name="filter" value="active">
+                    Active
+                </label>
+
+                <label>
+                    <input type="radio" name="filter" value="completed">
+                    Completed
+                </label>
+            </form>
+            <button class="taskList__clearCompleted">
+                Clear completed
+            </button>
+        </section>
+    </article>
+
+    <script src="./scripts/main.js"></script>
+</body>
+
+</html>

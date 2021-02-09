@@ -1,0 +1,39 @@
+.taskList {
+    width: 100%;
+    max-width: 500px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+
+    &__checkAll {
+        width: 20px;
+        margin: 10px;
+    }
+
+    &__newTask {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    &__input {
+        margin: 5px;
+        padding: 10px 5px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-family:'Montserrat', sans-serif;
+        font-weight: bold;
+        font-size: 1.2rem;
+        font-style: italic;
+
+        &::placeholder {
+            color: lightgray;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-around;
+    }
+}
