@@ -79,7 +79,7 @@ function renderTaskList(list, filter) {
         // Boton para finalizar tarea
         const checkBtn = newTask.querySelector(".task__status");
         checkBtn.addEventListener("click", function () {
-            completeTask(i);
+            completeTask(elem);
         })
 
         // Boton para borrar tarea
@@ -104,12 +104,13 @@ function countTasks() {
 }
 
 // Completar tarea
-function completeTask(i) {
-    if (currentTaskList[i].status != "completed") {
-        currentTaskList[i].status = "completed";
+function completeTask(elem) {
+    if (currentTaskList[currentTaskList.indexOf(elem)].status != "completed") {
+        currentTaskList[currentTaskList.indexOf(elem)].status = "completed";
         renderTaskList(currentTaskList, currentFilter);
-    } else {
-        currentTaskList[i].status = "active";
+        
+    } else if(currentTaskList[currentTaskList.indexOf(elem)].status == "completed") {
+        currentTaskList[currentTaskList.indexOf(elem)].status = "active";
         renderTaskList(currentTaskList, currentFilter);
     }
     countTasks();
