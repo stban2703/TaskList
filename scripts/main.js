@@ -85,7 +85,7 @@ function renderTaskList(list, filter) {
         // Boton para borrar tarea
         const deleteBtn = newTask.querySelector(".task__delete");
         deleteBtn.addEventListener("click", function () {
-            deleteTask(i);
+            deleteTask(elem);
         })
     })
 }
@@ -116,26 +116,16 @@ function completeTask(i) {
 }
 
 // Borrar tarea
-function deleteTask(i) {
-    currentTaskList.splice(i, 1);
+function deleteTask(elem) {
+    currentTaskList.splice(currentTaskList.indexOf(elem), 1);
     renderTaskList(currentTaskList, currentFilter);
     countTasks();
-    //console.log(itemCounter)
 }
 
 // Filtrar tareas
 filterForm.addEventListener("input", function () {
     //let listCopy = currentTaskList.slice();
     let filterValue = filterInput.value;
-
-    /*listCopy = listCopy.filter(function (elem) {
-        if (elem.status === filterValue) {
-            return true;
-        } else if(filterValue == "all") {
-            return true;
-        }
-    })*/
-
     currentFilter = filterValue;
     renderTaskList(currentTaskList, currentFilter);
 })
