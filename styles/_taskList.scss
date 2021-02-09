@@ -1,13 +1,23 @@
 .taskList {
     width: 100%;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     background-color: white;
     display: flex;
     flex-direction: column;
 
     &__checkAll {
+        opacity: 0.2;
         width: 20px;
         margin: 10px;
+
+        &--active {
+            opacity: 1;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &__newTask {
@@ -34,6 +44,21 @@
 
     &__footer {
         display: flex;
+        border-top: 1px solid lightgray;
+        padding: 8px 3px;
         justify-content: space-around;
+        font-family:'Montserrat', sans-serif;
+        font-size: 0.8rem;
+
+        & * {
+            color: gray;
+            font-weight: bold;
+        }
+
+    }
+
+    &__clearCompleted {
+        background: none;
+        border: none;
     }
 }

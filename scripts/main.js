@@ -3,12 +3,15 @@ const taskListContainer = document.querySelector(".taskList__container")
 const taskListFooter = document.querySelector(".taskList__footer");
 const filterForm = document.querySelector(".taskList__filter");
 const filterInput = filterForm.filter;
-const footerCounter = taskListFooter.querySelector(".taskList__count");
+const footerCounter = document.querySelector(".taskList__count");
+const checkAllBtn = document.querySelector(".taskList__checkAll");
 const clearCompletedBtn = document.querySelector(".taskList__clearCompleted");
 let currentTaskList = [];
 let itemCounter = 0;
 let currentFilter = "all";
 let generatedId = 0;
+
+countTasks();
 
 // Agregar tarea a lista
 newTaskForm.addEventListener("submit", function (event) {
@@ -23,9 +26,24 @@ newTaskForm.addEventListener("submit", function (event) {
     generatedId++;
     renderTaskList(currentTaskList, currentFilter);
     countTasks();
-    //console.log(currentTaskList);
+})
 
-    //console.log(currentTaskList.indexOf(newTask));
+// Completar todas las tareas
+checkAllBtn.addEventListener("click", function () {
+    let activeTask = checkTaskStatus(currentTaskList);
+
+    if (activeTask > 0) {
+        currentTaskList.forEach(function (elem) {
+            elem.status = "completed"
+        });
+    } else {
+        currentTaskList.forEach(function (elem) {
+            elem.status = "active"
+        });
+    }
+
+    renderTaskList(currentTaskList, currentFilter);
+    countTasks();
 })
 
 // Limpiar todas las tareas completadas
@@ -40,8 +58,8 @@ clearCompletedBtn.addEventListener("click", function () {
 function renderTaskList(list, filter) {
     taskListContainer.innerHTML = ``;
 
+    // Copiar lista y filtrarla
     let listCopy = list.slice();
-
     listCopy = list.filter(function (elem) {
         if (elem.status === filter) {
             return true;
@@ -49,8 +67,8 @@ function renderTaskList(list, filter) {
             return true;
         }
     })
-    //currentFilter = filter.value;
 
+    // Crear objeto HTML
     listCopy.forEach(function (elem, i) {
         const newTask = document.createElement('div');
         newTask.classList.add("task");
@@ -88,11 +106,20 @@ function renderTaskList(list, filter) {
             deleteTask(elem);
         })
     })
+
+    // Verificar estado para el boton de completar todo
+    let activeTask = checkTaskStatus(list);
+    if (activeTask < 1) {
+        checkAllBtn.classList.add("taskList__checkAll--active")
+    } else {
+        checkAllBtn.classList.remove("taskList__checkAll--active")
+    }
 }
 
 // Contar tareas activas
 function countTasks() {
     itemCounter = 0;
+
     currentTaskList.forEach(function (elem, i) {
         if (elem.status == "active") {
             itemCounter++;
@@ -101,6 +128,24 @@ function countTasks() {
 
     // Mostrar contador
     footerCounter.innerText = itemCounter;
+
+    if (itemCounter < 1) {
+        taskListFooter.classList.add("hidden")
+    } else {
+        taskListFooter.classList.remove("hidden")
+    }
+}
+
+
+function checkTaskStatus(list) {
+    let activeTask = 0;
+
+    list.forEach(function (elem) {
+        if (elem.status != "completed") {
+            activeTask++;
+        }
+    })
+    return activeTask;
 }
 
 // Completar tarea
@@ -108,8 +153,8 @@ function completeTask(elem) {
     if (currentTaskList[currentTaskList.indexOf(elem)].status != "completed") {
         currentTaskList[currentTaskList.indexOf(elem)].status = "completed";
         renderTaskList(currentTaskList, currentFilter);
-        
-    } else if(currentTaskList[currentTaskList.indexOf(elem)].status == "completed") {
+
+    } else if (currentTaskList[currentTaskList.indexOf(elem)].status == "completed") {
         currentTaskList[currentTaskList.indexOf(elem)].status = "active";
         renderTaskList(currentTaskList, currentFilter);
     }
@@ -123,9 +168,8 @@ function deleteTask(elem) {
     countTasks();
 }
 
-// Filtrar tareas
+// Aplicar filtros
 filterForm.addEventListener("input", function () {
-    //let listCopy = currentTaskList.slice();
     let filterValue = filterInput.value;
     currentFilter = filterValue;
     renderTaskList(currentTaskList, currentFilter);

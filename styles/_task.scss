@@ -1,5 +1,6 @@
 .task {
     display: flex;
+    border-top: 1px solid lightgray;
     align-items: center;
     width: 100%;
     justify-content: space-between;
@@ -39,6 +40,11 @@
     &--completed {
         .task__status {
             opacity: 1;
+        }
+
+        .task__description {
+            text-decoration: line-through;
+            color: lightgray;
         }
     }
 }
