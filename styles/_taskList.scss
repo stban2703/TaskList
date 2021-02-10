@@ -60,5 +60,10 @@
     &__clearCompleted {
         background: none;
         border: none;
+        outline: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }

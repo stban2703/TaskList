@@ -22,3 +22,11 @@ label:focus {
 input[type="radio"] {
     appearance: none;
 }
+
+.hidden {
+    visibility: hidden; 
+}
+
+.removed {
+    display: none;
+}

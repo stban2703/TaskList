@@ -329,6 +329,11 @@ input[type=button] {
 .taskList__clearCompleted {
   background: none;
   border: none;
+  outline: none;
+}
+
+.taskList__clearCompleted:hover {
+  text-decoration: underline;
 }
 
 .task {
@@ -411,5 +416,13 @@ input[type="radio"] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.removed {
+  display: none;
 }
 /*# sourceMappingURL=main.css.map */

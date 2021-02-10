@@ -11,21 +11,24 @@ let itemCounter = 0;
 let currentFilter = "all";
 let generatedId = 0;
 
-countTasks();
+//countTasks();
+checkTasKListLenght();
 
 // Agregar tarea a lista
 newTaskForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    let newTask = {
-        id: generatedId,
-        name: newTaskForm.taskName.value,
-        status: "active"
+    let inputText = newTaskForm.taskName.value;
+    if (inputText != "") {
+        let newTask = {
+            id: generatedId,
+            name: inputText,
+            status: "active"
+        }
+        currentTaskList.push(newTask);
+        newTaskForm.taskName.value = "";
+        generatedId++;
+        renderTaskList(currentTaskList, currentFilter);
     }
-    currentTaskList.push(newTask);
-    newTaskForm.taskName.value = "";
-    generatedId++;
-    renderTaskList(currentTaskList, currentFilter);
-    countTasks();
 })
 
 // Completar todas las tareas
@@ -43,7 +46,6 @@ checkAllBtn.addEventListener("click", function () {
     }
 
     renderTaskList(currentTaskList, currentFilter);
-    countTasks();
 })
 
 // Limpiar todas las tareas completadas
@@ -109,11 +111,17 @@ function renderTaskList(list, filter) {
 
     // Verificar estado para el boton de completar todo
     let activeTask = checkTaskStatus(list);
-    if (activeTask < 1) {
+    if (activeTask < 1 && currentTaskList.length > 0) {
         checkAllBtn.classList.add("taskList__checkAll--active")
-    } else {
+    } else if (activeTask > 0) {
         checkAllBtn.classList.remove("taskList__checkAll--active")
     }
+
+    // Verificar si existen tareas
+    checkTasKListLenght();
+
+    // Contar tareas activas
+    countTasks();
 }
 
 // Contar tareas activas
@@ -129,13 +137,12 @@ function countTasks() {
     // Mostrar contador
     footerCounter.innerText = itemCounter;
 
-    if (itemCounter < 1) {
+    /*if (itemCounter < 1) {
         taskListFooter.classList.add("hidden")
     } else {
         taskListFooter.classList.remove("hidden")
-    }
+    }*/
 }
-
 
 function checkTaskStatus(list) {
     let activeTask = 0;
@@ -148,6 +155,17 @@ function checkTaskStatus(list) {
     return activeTask;
 }
 
+// Verificat si hay tareas en la lita total
+function checkTasKListLenght() {
+    if(currentTaskList.length < 1) {
+        checkAllBtn.classList.add("hidden");
+        taskListFooter.classList.add("removed");
+    } else {
+        checkAllBtn.classList.remove("hidden");
+        taskListFooter.classList.remove("removed");
+    }
+}
+
 // Completar tarea
 function completeTask(elem) {
     if (currentTaskList[currentTaskList.indexOf(elem)].status != "completed") {
@@ -158,14 +176,12 @@ function completeTask(elem) {
         currentTaskList[currentTaskList.indexOf(elem)].status = "active";
         renderTaskList(currentTaskList, currentFilter);
     }
-    countTasks();
 }
 
 // Borrar tarea
 function deleteTask(elem) {
     currentTaskList.splice(currentTaskList.indexOf(elem), 1);
     renderTaskList(currentTaskList, currentFilter);
-    countTasks();
 }
 
 // Aplicar filtros
