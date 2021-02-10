@@ -354,7 +354,7 @@ input[type=button] {
 .task__status {
   width: 40px;
   max-width: none;
-  margin: 8px;
+  margin: 0 8px;
   opacity: .1;
 }
 
@@ -363,18 +363,25 @@ input[type=button] {
 }
 
 .task__description {
-  margin: 5px;
+  padding: 15px 10px;
   font-size: 1.2rem;
   color: #2e2e2e;
+  outline: none;
   font-weight: bold;
   font-family: 'Montserrat', sans-serif;
   width: 100%;
 }
 
+.task__description[contenteditable="true"] {
+  border: 1px solid #464646;
+  -webkit-box-shadow: inset 0 0 4px #464646;
+          box-shadow: inset 0 0 4px #464646;
+}
+
 .task__delete {
   width: 20px;
   max-width: none;
-  margin: 8px;
+  margin: 0 8px;
   opacity: .5;
 }
 
@@ -410,12 +417,14 @@ body {
           justify-content: center;
 }
 
-label:focus {
-  border: 1px solid red;
+label {
+  padding: 4px 6px;
+  position: relative;
+  margin: 0 5px;
 }
 
 input[type="radio"] {
-  margin: 0 5px;
+  position: absolute;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -427,5 +436,10 @@ input[type="radio"] {
 
 .removed {
   display: none;
+}
+
+.selected {
+  border-radius: 5px;
+  border: 1px solid rgba(255, 0, 0, 0.26);
 }
 /*# sourceMappingURL=main.css.map */

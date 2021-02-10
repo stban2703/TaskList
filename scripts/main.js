@@ -2,14 +2,23 @@ const newTaskForm = document.querySelector(".taskList__newTask");
 const taskListContainer = document.querySelector(".taskList__container")
 const taskListFooter = document.querySelector(".taskList__footer");
 const filterForm = document.querySelector(".taskList__filter");
+const filterList = document.querySelectorAll(".taskList__filter label");
 const filterInput = filterForm.filter;
 const footerCounter = document.querySelector(".taskList__count");
 const checkAllBtn = document.querySelector(".taskList__checkAll");
 const clearCompletedBtn = document.querySelector(".taskList__clearCompleted");
 let currentTaskList = [];
 let itemCounter = 0;
+let selectedFilter = 0;
 let currentFilter = "all";
 let generatedId = 0;
+
+// Mostrar filtro actual
+filterList.forEach(function (elem, i) {
+    elem.addEventListener("click", function () {
+        selectedFilter = i;
+    });
+})
 
 //countTasks();
 checkTasKListLenght();
@@ -79,7 +88,7 @@ function renderTaskList(list, filter) {
             <img src="./img/verified.svg" alt="">
         </div>
 
-        <p class="task__description">${elem.name}</p>
+        <p class="task__description" contenteditable="false">${elem.name}</p>
 
         <div class="task__delete">
             <img src="./img/borrar.svg" alt="">
@@ -95,6 +104,20 @@ function renderTaskList(list, filter) {
 
         // Agregar al contenedor
         taskListContainer.appendChild(newTask);
+
+        // Editar texto
+        const editableText = newTask.querySelector(".task__description");
+        editableText.addEventListener("dblclick", function () {
+            editableText.setAttribute("contenteditable", true);
+        })
+
+        document.addEventListener("click", function (event) {
+            let isClickInside = editableText.contains(event.target);
+
+            if (!isClickInside) {
+                editableText.setAttribute("contenteditable", false);
+            }
+        })
 
         // Boton para finalizar tarea
         const checkBtn = newTask.querySelector(".task__status");
@@ -112,7 +135,6 @@ function renderTaskList(list, filter) {
     // Verificar estado para el boton de completar todo
     let activeTask = checkActiveTasks(list);
     let completedTask = list.length - checkActiveTasks(list);
-    console.log(completedTask);
 
     if (activeTask < 1 && currentTaskList.length > 0) {
         checkAllBtn.classList.add("taskList__checkAll--active")
@@ -120,11 +142,41 @@ function renderTaskList(list, filter) {
         checkAllBtn.classList.remove("taskList__checkAll--active")
     }
 
-    if(completedTask > 0) {
+    if (completedTask > 0) {
         clearCompletedBtn.classList.remove("hidden");
     } else {
         clearCompletedBtn.classList.add("hidden");
     }
+
+    // Mostrar filtro activo
+    filterList.forEach(function (elem, i) {
+        if (i == selectedFilter) {
+            elem.classList.add("selected");
+        } else {
+            elem.classList.remove("selected");
+        }
+    })
+
+    /*
+    switch (filter) {
+        case "all":
+            filterList[0].classList.add("selected");
+            filterList[1].classList.remove("selected");
+            filterList[2].classList.remove("selected");
+            break;
+
+        case "active":
+            filterList[0].classList.remove("selected");
+            filterList[1].classList.add("selected");
+            filterList[2].classList.remove("selected");
+            break;
+
+        case "completed":
+            filterList[0].classList.remove("selected");
+            filterList[1].classList.remove("selected");
+            filterList[2].classList.add("selected");
+            break;
+    }*/
 
     // Verificar si existen tareas
     checkTasKListLenght();
@@ -167,7 +219,7 @@ function checkActiveTasks(list) {
 
 // Verificat si hay tareas en la lita total
 function checkTasKListLenght() {
-    if(currentTaskList.length < 1) {
+    if (currentTaskList.length < 1) {
         checkAllBtn.classList.add("hidden");
         taskListFooter.classList.add("removed");
     } else {

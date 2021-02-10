@@ -15,12 +15,14 @@ body {
     justify-content: center;
 }
 
-label:focus {
-    border: 1px solid red;
+label {
+    padding: 4px 6px;    
+    position: relative;
+    margin: 0 5px;
 }
 
 input[type="radio"] {
-    margin: 0 5px;
+    position: absolute;
     appearance: none;
 }
 
@@ -30,4 +32,9 @@ input[type="radio"] {
 
 .removed {
     display: none;
+}
+
+.selected {
+    border-radius: 5px;
+    border: 1px solid rgba(255, 0, 0, 0.26);
 }
