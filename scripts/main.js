@@ -116,6 +116,7 @@ function renderTaskList(list, filter) {
 
             if (!isClickInside) {
                 editableText.setAttribute("contenteditable", false);
+                elem.name = editableText.innerText;
             }
         })
 
@@ -157,27 +158,6 @@ function renderTaskList(list, filter) {
         }
     })
 
-    /*
-    switch (filter) {
-        case "all":
-            filterList[0].classList.add("selected");
-            filterList[1].classList.remove("selected");
-            filterList[2].classList.remove("selected");
-            break;
-
-        case "active":
-            filterList[0].classList.remove("selected");
-            filterList[1].classList.add("selected");
-            filterList[2].classList.remove("selected");
-            break;
-
-        case "completed":
-            filterList[0].classList.remove("selected");
-            filterList[1].classList.remove("selected");
-            filterList[2].classList.add("selected");
-            break;
-    }*/
-
     // Verificar si existen tareas
     checkTasKListLenght();
 
@@ -197,12 +177,6 @@ function countTasks() {
 
     // Mostrar contador
     footerCounter.innerText = itemCounter;
-
-    /*if (itemCounter < 1) {
-        taskListFooter.classList.add("hidden")
-    } else {
-        taskListFooter.classList.remove("hidden")
-    }*/
 }
 
 // Verificar tareas activas
