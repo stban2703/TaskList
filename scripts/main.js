@@ -33,7 +33,7 @@ newTaskForm.addEventListener("submit", function (event) {
 
 // Completar todas las tareas
 checkAllBtn.addEventListener("click", function () {
-    let activeTask = checkTaskStatus(currentTaskList);
+    let activeTask = checkActiveTasks(currentTaskList);
 
     if (activeTask > 0) {
         currentTaskList.forEach(function (elem) {
@@ -110,11 +110,20 @@ function renderTaskList(list, filter) {
     })
 
     // Verificar estado para el boton de completar todo
-    let activeTask = checkTaskStatus(list);
+    let activeTask = checkActiveTasks(list);
+    let completedTask = list.length - checkActiveTasks(list);
+    console.log(completedTask);
+
     if (activeTask < 1 && currentTaskList.length > 0) {
         checkAllBtn.classList.add("taskList__checkAll--active")
     } else if (activeTask > 0) {
         checkAllBtn.classList.remove("taskList__checkAll--active")
+    }
+
+    if(completedTask > 0) {
+        clearCompletedBtn.classList.remove("hidden");
+    } else {
+        clearCompletedBtn.classList.add("hidden");
     }
 
     // Verificar si existen tareas
@@ -144,7 +153,8 @@ function countTasks() {
     }*/
 }
 
-function checkTaskStatus(list) {
+// Verificar tareas activas
+function checkActiveTasks(list) {
     let activeTask = 0;
 
     list.forEach(function (elem) {
