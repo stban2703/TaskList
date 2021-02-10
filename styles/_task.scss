@@ -36,6 +36,7 @@
         max-width: none;
         margin: 0 8px;
         opacity: .5;
+        visibility: hidden;
         
         &:hover {
             cursor: pointer;
@@ -52,6 +53,12 @@
         .task__description {
             text-decoration: line-through;
             color: lightgray;
+        }
+    }
+
+    &:hover {
+        .task__delete {
+            visibility: visible;;
         }
     }
 }

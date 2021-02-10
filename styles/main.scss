@@ -1,6 +1,7 @@
 @import "reset";
 @import "taskList";
 @import "task";
+@import "footer";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 html {
@@ -38,19 +39,4 @@ input[type="radio"] {
 .selected {
     border-radius: 5px;
     border: 1px solid rgba(255, 0, 0, 0.26);
-}
-
-.footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 5px 0;
-
-    p {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: bold;
-        font-size: 0.8rem;
-        color: darkgray;
-        margin: 2px 0;
-    }
 }
