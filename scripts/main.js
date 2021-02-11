@@ -12,6 +12,14 @@ let itemCounter = 0;
 let selectedFilter = 0;
 let currentFilter = "all";
 let generatedId = 0;
+let savedTaskList = localStorage.getItem("list");
+let taskListHistory = [];
+
+if(savedTaskList) {
+    currentTaskList = JSON.parse(savedTaskList);
+}
+
+renderTaskList(currentTaskList, currentFilter);
 
 // Mostrar filtro actual
 filterList.forEach(function (elem, i) {
@@ -70,7 +78,7 @@ function renderTaskList(list, filter) {
     taskListContainer.innerHTML = ``;
 
     // Copiar lista y filtrarla
-    let listCopy = list.slice();
+    let listCopy = [...list];
     listCopy = list.filter(function (elem) {
         if (elem.status === filter) {
             return true;
@@ -163,7 +171,26 @@ function renderTaskList(list, filter) {
 
     // Contar tareas activas
     countTasks();
+
+    localStorage.setItem("list", JSON.stringify(list))
+    taskListHistory.push({
+        list: JSON.parse(JSON.stringify(list)),
+        filter: filter
+    })
 }
+
+document.addEventListener("keyup", function(event) {
+    console.log(event)
+    if(event.key == 'z' && event.ctrlKey) {
+        taskListHistory.pop();
+        let current = taskListHistory.pop();
+
+        currentTaskList = current.list;
+        currentFilter = current.filter;
+
+        renderTaskList(currentTaskList, currentFilter);
+    }
+})
 
 // Contar tareas activas
 function countTasks() {
